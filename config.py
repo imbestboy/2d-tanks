@@ -4,6 +4,12 @@ import customtkinter
 MAIN_MENU_SCREEN_WIDTH: int = 1000
 MAIN_MENU_SCREEN_HEIGHT: int = 400
 
+# -- game screen config
+CELL_X: int = 150
+CELL_Y: int = 120
+GAME_SCREEN_WIDTH: int = CELL_X * 8
+GAME_SCREEN_HEIGHT: int = CELL_Y * 7
+
 # -- theme config
 customtkinter.set_default_color_theme("green")
 customtkinter.set_appearance_mode("system")

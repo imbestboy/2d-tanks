@@ -2,6 +2,7 @@ import customtkinter
 
 import config
 import functions
+import game
 
 
 def start_main_menu():
@@ -44,7 +45,7 @@ def start_main_menu():
     customtkinter.CTkButton(
         buttons_frame,
         text="Start Game",
-        command=lambda: 1,
+        command=lambda: game.start_game(main_menu_window=main_menu_window),
         width=200,
         height=55,
         font=config.bold_font,

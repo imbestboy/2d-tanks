@@ -13,5 +13,9 @@ temp_window = customtkinter.CTk()
 
 # -- font config
 normal_font = customtkinter.CTkFont("Helvetica", 20)
+bold_font = customtkinter.CTkFont("Helvetica", 20, "bold")
 
 temp_window.destroy()
+
+# -- vertical distance between components main menu
+PADDING_Y = 30

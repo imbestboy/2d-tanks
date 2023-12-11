@@ -26,13 +26,13 @@ def start_main_menu():
         text="Choose game theme (default : system) : ",
         font=config.normal_font,
     ).grid(column=0, row=0, padx=10)
-    customtkinter.CTkButton(change_theme_frame, text="Dark", command=lambda: 1).grid(
-        column=1, row=0
-    )
+    customtkinter.CTkButton(
+        change_theme_frame, text="Dark", command=lambda: functions.change_theme("dark")
+    ).grid(column=1, row=0)
     customtkinter.CTkButton(
         change_theme_frame,
         text="Light",
-        command=lambda: 1,
+        command=lambda: functions.change_theme("light"),
     ).grid(column=2, row=0, padx=10)
 
     return main_menu_window

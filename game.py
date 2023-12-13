@@ -26,6 +26,9 @@ def start_game(main_menu_window: customtkinter.CTk) -> None:
     is_running = True
     is_game_over = False
 
+    # -- game components setup
+    wall_color = "gray14" if dark_mode else "gray92"
+
     # -- game window size
     screen = pygame.display.set_mode(
         (config.GAME_SCREEN_WIDTH, config.GAME_SCREEN_HEIGHT)
@@ -41,6 +44,10 @@ def start_game(main_menu_window: customtkinter.CTk) -> None:
                 main_menu.start_main_menu()
 
         screen.fill(game_background_color)
+
+        # x = pygame.Rect(20, 30, 60, 100)
+        # pygame.draw.rect(screen, "red", x)
+        functions.draw_map(screen, wall_color, "map_1")
 
         # -- update() the display to put your work on screen
         pygame.display.update()

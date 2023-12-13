@@ -8,7 +8,10 @@ MAIN_MENU_SCREEN_HEIGHT: int = 400
 CELL_X: int = 150
 CELL_Y: int = 120
 GAME_SCREEN_WIDTH: int = CELL_X * 8
-GAME_SCREEN_HEIGHT: int = CELL_Y * 7
+GAME_SCREEN_HEIGHT: int = CELL_Y * 8
+
+# -- map configs
+WALL_THICKNESS: int = 10
 
 # -- theme config
 customtkinter.set_default_color_theme("green")

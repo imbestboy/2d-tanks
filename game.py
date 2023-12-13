@@ -14,7 +14,7 @@ def start_game(main_menu_window: customtkinter.CTk) -> None:
         main_menu_window {customtkinter.CTk} -- tkinter main menu window
     """
     # -- loading settings
-    dark_mode = True if main_menu_window["bg"] == "gray10" else False
+    dark_mode = True if main_menu_window["bg"] == "gray92" else False
     game_background_color = main_menu_window["bg"]
 
     # -- close main menu window

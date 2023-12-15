@@ -28,3 +28,7 @@ temp_window.destroy()
 
 # -- vertical distance between components main menu
 PADDING_Y = 30
+
+# -- tanks config
+TANK_WIDTH: int = 90
+TANK_HEIGHT: int = 60

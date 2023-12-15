@@ -25,9 +25,12 @@ def start_game(main_menu_window: customtkinter.CTk) -> None:
     clock = pygame.time.Clock()
     is_running = True
     is_game_over = False
+    font = pygame.font.SysFont("Helvetica", 20)
 
     # -- game components setup
     wall_color = "gray14" if dark_mode else "gray92"
+    map_name = "map_1"
+    walls, tanks = functions.map_reader(map_name)
 
     # -- game window size
     screen = pygame.display.set_mode(
@@ -47,7 +50,15 @@ def start_game(main_menu_window: customtkinter.CTk) -> None:
 
         # x = pygame.Rect(20, 30, 60, 100)
         # pygame.draw.rect(screen, "red", x)
-        functions.draw_map(screen, wall_color, "map_1")
+        functions.draw_map(
+            screen=screen,
+            wall_color=wall_color,
+            walls=walls,
+            background_color=game_background_color,
+            font=font,
+            tank_a=tanks[0],
+            tank_b=tanks[1],
+        )
 
         # -- update() the display to put your work on screen
         pygame.display.update()

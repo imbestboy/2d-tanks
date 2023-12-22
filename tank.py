@@ -22,12 +22,14 @@ class Tank:
             self.angle -= self.rotation_vel
 
     def draw(self, screen, dark_mode):
-        functions.blit_rotate_center(screen, self.img, (self.x, self.y), self.angle)
-        font = pygame.font.SysFont("Helvetica", 16)
+        new_rect = functions.blit_rotate_center(
+            screen, self.img, (self.x, self.y), self.angle
+        )
+        font = pygame.font.SysFont("Helvetica", 12)
         text_color = "gray92" if dark_mode else "gray14"
         tank_name_text = font.render(self.name, True, text_color)
-        tank_name_x = self.img.get_rect().centerx + self.x - 1
-        tank_name_y = self.img.get_rect().centery + self.y + 2
+        tank_name_x = self.img.get_rect().centerx + self.x
+        tank_name_y = self.img.get_rect().centery + self.y
         screen.blit(
             tank_name_text,
             (
@@ -35,6 +37,7 @@ class Tank:
                 tank_name_y - tank_name_text.get_height() // 2,
             ),
         )
+        return new_rect
 
     def move_forward(self):
         self.vel = self.speed
@@ -51,3 +54,7 @@ class Tank:
 
         self.y -= vertical
         self.x -= horizontal
+
+    def hit_wall(self):
+        self.vel = -3 * self.vel
+        self.move()

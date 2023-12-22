@@ -65,6 +65,15 @@ def start_game(main_menu_window: customtkinter.CTk) -> None:
         # -- get which key pressed by user (pygame.K_LEFT => left arrow and pygame.K_RIGHT => right arrow)
         tank_a, tank_b = tanks
         keys = pygame.key.get_pressed()
+        walls_rect = [
+            functions.draw_wall(**wall, screen=screen, color=wall_color)
+            for wall in walls
+        ]
+        for tank in tanks:
+            tank_rect = tank.draw(screen, dark_mode)
+            if tank_rect.collidelistall(walls_rect):
+                tank.hit_wall()
+
         if keys[pygame.K_LEFT]:
             tank_a.rotate(left=True)
         if keys[pygame.K_RIGHT]:
@@ -82,14 +91,6 @@ def start_game(main_menu_window: customtkinter.CTk) -> None:
             tank_b.rotate(left=True)
         if keys[pygame.K_d]:
             tank_b.rotate(right=True)
-
-        walls_rect = [
-            functions.draw_wall(**wall, screen=screen, color=wall_color)
-            for wall in walls
-        ]
-
-        for tank in tanks:
-            tank.draw(screen, dark_mode)
 
         # -- update() the display to put your work on screen
         pygame.display.update()

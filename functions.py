@@ -79,3 +79,4 @@ def blit_rotate_center(
     rotated_image = pygame.transform.rotate(image, angle)
     new_rect = rotated_image.get_rect(center=image.get_rect(topleft=top_left).center)
     screen.blit(rotated_image, new_rect.topleft)
+    return new_rect

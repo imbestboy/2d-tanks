@@ -25,7 +25,7 @@ def draw_map(
     font: pygame.font.SysFont,
     tank_a: dict,
     tank_b: dict,
-) -> tuple:
+) -> list:
     """draw_map draw game map on pygame screen
 
     Arguments:
@@ -38,13 +38,14 @@ def draw_map(
         tank_b {dict} -- horizontal and vertical tank b position
 
     Returns:
-        tuple -- two list filled by pygame.Rect instances first list for walls and second for tanks
+        list -- list filled by pygame.Rect instances for tanks
     """
 
     walls = [draw_wall(**wall, screen=screen, color=wall_color) for wall in walls]
     tanks = [
         draw_tank(
-            **tank,
+            x=tank.x,
+            y=tank.y,
             screen=screen,
             tank_color=wall_color,
             background_color=background_color,
@@ -53,7 +54,7 @@ def draw_map(
         )
         for tank, player in zip((tank_a, tank_b), ("A", "B"))
     ]
-    return walls, tanks
+    return tanks
 
 
 def map_reader(name: str) -> tuple:
@@ -132,12 +133,6 @@ def draw_tank(
     Returns:
         pygame.Rect -- drawn tank
     """
-    if 1 <= x <= 8:
-        x = (x * config.CELL_X) - config.CELL_X
-        x += config.CELL_X // 3
-    if 1 <= y <= 8:
-        y = (y * config.CELL_Y) - config.CELL_Y
-        y += config.CELL_Y // 3
     tank_rect = pygame.Rect(x, y, config.TANK_WIDTH, config.TANK_HEIGHT)
     tank_pipe = pygame.Rect(
         tank_rect.centerx - 5,
@@ -145,28 +140,28 @@ def draw_tank(
         config.TANK_WIDTH // 2 + 5,
         config.TANK_HEIGHT // 6,
     )
-    circle = pygame.draw.circle(
+    drawn_circle_border = pygame.draw.circle(
         screen,
         tank_color,
         (tank_rect.centerx - 5, tank_rect.centery - 1),
         tank_rect.height // 2 - 8,
         1,
     )
-    pygame.draw.rect(screen, background_color, tank_pipe)
-    pygame.draw.rect(screen, tank_color, tank_pipe, 1)
-    circle = pygame.draw.circle(
+    drawn_tank_pipe = pygame.draw.rect(screen, background_color, tank_pipe)
+    drawn_tank_pipe_border = pygame.draw.rect(screen, tank_color, tank_pipe, 1)
+    drawn_circle = pygame.draw.circle(
         screen,
         background_color,
         (tank_rect.centerx - 5, tank_rect.centery - 1),
         tank_rect.height // 2 - 8 - 1,
     )
-    pygame.draw.rect(screen, tank_color, tank_rect, 1)
+    drawn_tank_border = pygame.draw.rect(screen, tank_color, tank_rect, 1)
     player_text = font.render(tank_name, True, tank_color)
-    screen.blit(
+    typed_text = screen.blit(
         player_text,
         (
-            circle.centerx - (player_text.get_width() // 2),
-            circle.centery - (player_text.get_height() // 1.7),
+            drawn_circle.centerx - (player_text.get_width() // 2),
+            drawn_circle.centery - (player_text.get_height() // 1.7),
         ),
     )
 

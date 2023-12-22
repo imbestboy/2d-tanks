@@ -30,6 +30,5 @@ temp_window.destroy()
 PADDING_Y = 30
 
 # -- tanks config
-TANK_WIDTH: int = 90
-TANK_HEIGHT: int = 60
-TANKS_SPEED: int = 10
+TANKS_SPEED: int = 6
+TANKS_ROTATION_SPEED: int = 4

@@ -5,6 +5,7 @@ import customtkinter
 import config
 import main_menu
 import functions
+from tank import Tank
 
 
 def start_game(main_menu_window: customtkinter.CTk) -> None:
@@ -14,7 +15,7 @@ def start_game(main_menu_window: customtkinter.CTk) -> None:
         main_menu_window {customtkinter.CTk} -- tkinter main menu window
     """
     # -- loading settings
-    dark_mode = True if main_menu_window["bg"] == "gray92" else False
+    dark_mode = True if main_menu_window["bg"] == "gray14" else False
     game_background_color = main_menu_window["bg"]
 
     # -- close main menu window
@@ -28,7 +29,7 @@ def start_game(main_menu_window: customtkinter.CTk) -> None:
     font = pygame.font.SysFont("Helvetica", 20)
 
     # -- game components setup
-    wall_color = "gray14" if dark_mode else "gray92"
+    wall_color = "gray92" if dark_mode else "gray14"
     map_name = "map_1"
     walls, tanks = functions.map_reader(map_name)
     tank_a, tank_b = tanks
@@ -40,12 +41,9 @@ def start_game(main_menu_window: customtkinter.CTk) -> None:
     tank_b["x"] += config.CELL_X // 3
     tank_b["y"] = (tank_b["y"] * config.CELL_Y) - config.CELL_Y
     tank_b["y"] += config.CELL_Y // 3
-    tank_a = pygame.Rect(
-        tank_a["x"], tank_a["y"], config.TANK_WIDTH, config.TANK_HEIGHT
-    )
-    tank_b = pygame.Rect(
-        tank_b["x"], tank_b["y"], config.TANK_WIDTH, config.TANK_HEIGHT
-    )
+    tank_image_path = "tank_images/dark.png" if dark_mode else "tank_images/light.png"
+    tank_a = Tank(tank_image_path, (tank_a["x"], tank_a["y"]), 0, "A")
+    tank_b = Tank(tank_image_path, (tank_b["x"], tank_b["y"]), 270, "B")
     tanks = [tank_a, tank_b]
 
     # -- game window size
@@ -68,36 +66,30 @@ def start_game(main_menu_window: customtkinter.CTk) -> None:
         tank_a, tank_b = tanks
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:
-            pass
-        # if keys[pygame.K_RIGHT]:
-        #     spaceship_x += spaceship_speed
-        if (
-            keys[pygame.K_UP]
-            and 10 <= tank_a.x
-            and tank_a.x + config.TANK_WIDTH < config.GAME_SCREEN_WIDTH - 10
-        ):
-            tank_a.x += config.TANKS_SPEED
-        if keys[pygame.K_DOWN] and 10 < tank_a.x < config.GAME_SCREEN_WIDTH - 10:
-            tank_a.x -= config.TANKS_SPEED
+            tank_a.rotate(left=True)
+        if keys[pygame.K_RIGHT]:
+            tank_a.rotate(right=True)
+        if keys[pygame.K_UP]:
+            tank_a.move_forward()
+        if keys[pygame.K_DOWN]:
+            tank_a.move_backward()
 
-        if (
-            keys[pygame.K_w]
-            and 10 <= tank_b.x
-            and tank_b.x + config.TANK_WIDTH < config.GAME_SCREEN_WIDTH - 10
-        ):
-            tank_b.x += config.TANKS_SPEED
-        if keys[pygame.K_s] and 10 < tank_b.x < config.GAME_SCREEN_WIDTH - 10:
-            tank_b.x -= config.TANKS_SPEED
+        if keys[pygame.K_w]:
+            tank_b.move_forward()
+        if keys[pygame.K_s]:
+            tank_b.move_backward()
+        if keys[pygame.K_a]:
+            tank_b.rotate(left=True)
+        if keys[pygame.K_d]:
+            tank_b.rotate(right=True)
 
-        tanks = functions.draw_map(
-            screen=screen,
-            wall_color=wall_color,
-            walls=walls,
-            background_color=game_background_color,
-            font=font,
-            tank_a=tank_a,
-            tank_b=tank_b,
-        )
+        walls_rect = [
+            functions.draw_wall(**wall, screen=screen, color=wall_color)
+            for wall in walls
+        ]
+
+        for tank in tanks:
+            tank.draw(screen, dark_mode)
 
         # -- update() the display to put your work on screen
         pygame.display.update()

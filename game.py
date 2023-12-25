@@ -59,6 +59,11 @@ def start_game(main_menu_window: customtkinter.CTk) -> None:
                 is_running = False
                 # -- run main menu window again
                 main_menu.start_main_menu()
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_SLASH:
+                    tank_a.shoot(screen, dark_mode)
+                if event.key == pygame.K_c:
+                    tank_b.shoot(screen, dark_mode)
 
         screen.fill(game_background_color)
 
@@ -70,6 +75,13 @@ def start_game(main_menu_window: customtkinter.CTk) -> None:
             for wall in walls
         ]
         for tank in tanks:
+            for bullet in tank.bullets:
+                if bullet.check_die():
+                    tank.bullet_die()
+                else:
+                    bullet.move_forward()
+                    bullet.draw(screen)
+
             tank_rect = tank.draw(screen, dark_mode)
             if tank_rect.collidelistall(walls_rect):
                 tank.hit_wall()

@@ -80,7 +80,7 @@ def start_game(main_menu_window: customtkinter.CTk) -> None:
                     tank.bullet_die()
                 else:
                     bullet.move_forward()
-                    bullet.draw(screen)
+                    bullet.draw_and_check_hit_wall(screen, walls_rect)
 
             tank_rect = tank.draw(screen, dark_mode)
             if tank_rect.collidelistall(walls_rect):

@@ -86,24 +86,19 @@ class Bullet:
         self.hit_count = 0
         self.alive_time = config.BULLET_ALIVE_TIME
         self.birth_time = time.time()
+        self.horizontal_negative = 1  # 1 or -1
+        self.vertical_negative = 1  # 1 or -1
 
     def move(self):
         radians = math.radians(self.angle)
         vertical = math.cos(radians) * self.vel
         horizontal = math.sin(radians) * self.vel
 
-        self.y -= vertical
-        self.x -= horizontal
+        self.y -= vertical * self.vertical_negative
+        self.x -= horizontal * self.horizontal_negative
 
     def move_forward(self):
         self.vel = self.speed
-        self.move()
-
-    def hit_wall(self):
-        if self.hit_wall >= 3:
-            pass
-        self.vel = -3 * self.vel
-        self.hit_count += 1
         self.move()
 
     def draw(self, screen):
@@ -114,3 +109,22 @@ class Bullet:
 
     def check_die(self):
         return time.time() - self.birth_time >= self.alive_time
+
+    def draw_and_check_hit_wall(self, screen: pygame.surface.Surface, walls: list):
+        bullet_rect = self.draw(screen)
+        top_bullet_rect = pygame.draw.line(
+            screen, "black", bullet_rect.topleft, bullet_rect.topright, 1
+        )
+        bottom_bullet_rect = pygame.draw.line(
+            screen, "black", bullet_rect.bottomleft, bullet_rect.bottomright, 1
+        )
+        for wall in walls:
+            if wall.colliderect(top_bullet_rect):
+                top_left_x, _ = wall.topleft
+                bottom_right_x, _ = wall.bottomright
+                is_wall_horizontal = bottom_right_x - top_left_x > 10
+                self.vertical_negative *= -1
+                if not is_wall_horizontal:
+                    self.horizontal_negative *= -1
+            if wall.colliderect(bottom_bullet_rect):
+                self.vertical_negative *= -1

@@ -79,8 +79,9 @@ class Tank:
 class Bullet:
     def __init__(self, image_path: str, shoot_position: tuple, angle: int):
         self.img = pygame.image.load(image_path)
-        self.speed = config.TANKS_SPEED
+        self.speed = config.BULLET_SPEED
         self.vel = self.speed
+        self.is_inside = True
         self.angle = angle
         self.x, self.y = shoot_position
         self.hit_count = 0
@@ -128,3 +129,16 @@ class Bullet:
                     self.horizontal_negative *= -1
             if wall.colliderect(bottom_bullet_rect):
                 self.vertical_negative *= -1
+
+    def check_hit_tank(
+        self, screen: pygame.surface.Surface, tanks: list, dark_mode: bool
+    ):
+        bullet_rect = self.draw(screen)
+        is_hit = False
+        for tank in tanks:
+            if bullet_rect.colliderect(tank.draw(screen, dark_mode)):
+                if not self.is_inside:
+                    return tank
+                is_hit = True
+        if not is_hit:
+            self.is_inside = False

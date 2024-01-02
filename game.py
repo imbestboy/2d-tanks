@@ -81,7 +81,9 @@ def start_game(main_menu_window: customtkinter.CTk) -> None:
                     tank.bullet_die()
                 else:
                     bullet.move_forward()
-                    bullet.draw_and_check_hit_wall(screen, walls_rect)
+                    bullet.draw_and_check_hit_wall(
+                        screen, walls_rect, game_background_color
+                    )
                     if hit_tank := bullet.check_hit_tank(screen, tanks, dark_mode):
                         tank.bullets.remove(bullet)
                         is_game_over = True

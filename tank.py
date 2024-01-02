@@ -111,13 +111,15 @@ class Bullet:
     def check_die(self):
         return time.time() - self.birth_time >= self.alive_time
 
-    def draw_and_check_hit_wall(self, screen: pygame.surface.Surface, walls: list):
+    def draw_and_check_hit_wall(
+        self, screen: pygame.surface.Surface, walls: list, background_color: str
+    ):
         bullet_rect = self.draw(screen)
         top_bullet_rect = pygame.draw.line(
-            screen, "black", bullet_rect.topleft, bullet_rect.topright, 1
+            screen, background_color, bullet_rect.topleft, bullet_rect.topright, 1
         )
         bottom_bullet_rect = pygame.draw.line(
-            screen, "black", bullet_rect.bottomleft, bullet_rect.bottomright, 1
+            screen, background_color, bullet_rect.bottomleft, bullet_rect.bottomright, 1
         )
         for wall in walls:
             if wall.colliderect(top_bullet_rect):

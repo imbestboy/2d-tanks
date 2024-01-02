@@ -26,7 +26,8 @@ def start_game(main_menu_window: customtkinter.CTk) -> None:
     clock = pygame.time.Clock()
     is_running = True
     is_game_over = False
-    font = pygame.font.SysFont("Helvetica", 20)
+    winner_font = pygame.font.SysFont("Helvetica", 50)
+    winner_name = None
 
     # -- game components setup
     wall_color = "gray92" if dark_mode else "gray14"
@@ -81,8 +82,10 @@ def start_game(main_menu_window: customtkinter.CTk) -> None:
                 else:
                     bullet.move_forward()
                     bullet.draw_and_check_hit_wall(screen, walls_rect)
-                    if bullet.check_hit_tank(screen, tanks, dark_mode):
+                    if hit_tank := bullet.check_hit_tank(screen, tanks, dark_mode):
                         tank.bullets.remove(bullet)
+                        is_game_over = True
+                        winner_name = "A" if hit_tank.name == "B" else "B"
 
             tank_rect = tank.draw(screen, dark_mode)
             if tank_rect.collidelistall(walls_rect):
@@ -105,6 +108,30 @@ def start_game(main_menu_window: customtkinter.CTk) -> None:
             tank_b.rotate(left=True)
         if keys[pygame.K_d]:
             tank_b.rotate(right=True)
+
+        if is_game_over:
+            screen.fill(game_background_color)
+            winner_name_text = winner_font.render(
+                winner_name + " WIN", True, wall_color
+            )
+            winner_name_x = (config.GAME_SCREEN_WIDTH // 2) - (
+                winner_name_text.get_width() // 2
+            )
+            winner_name_y = (config.GAME_SCREEN_HEIGHT // 2) - (
+                winner_name_text.get_height() // 2
+            )
+            screen.blit(winner_name_text, (winner_name_x, winner_name_y))
+            winner_rect = pygame.Rect(
+                winner_name_x - 20,
+                winner_name_y - 20,
+                winner_name_text.get_width() + 40,
+                winner_name_text.get_height() + 40,
+            )
+            pygame.draw.rect(screen, wall_color, winner_rect, 3)
+            pygame.display.update()
+            pygame.time.delay(3000)
+            is_running = False
+            main_menu.start_main_menu()
 
         # -- update() the display to put your work on screen
         pygame.display.update()

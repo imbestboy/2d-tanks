@@ -80,3 +80,16 @@ def blit_rotate_center(
     new_rect = rotated_image.get_rect(center=image.get_rect(topleft=top_left).center)
     screen.blit(rotated_image, new_rect.topleft)
     return new_rect
+
+
+def show_winner_score(
+    winner_score: float, winner_score_label: customtkinter.CTkLabel
+) -> None:
+    """show_winner_score show winner score label next to winner score slider for end user with every slider move
+
+    Arguments:
+        speed_value {float} -- spaceship speed
+        spaceship_speed_label {customtkinter.CTkLabel} -- label to show spaceship speed
+    """
+    winner_score = int(winner_score)
+    winner_score_label.configure(text=winner_score)

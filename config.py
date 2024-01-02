@@ -4,6 +4,9 @@ import customtkinter
 MAIN_MENU_SCREEN_WIDTH: int = 1000
 MAIN_MENU_SCREEN_HEIGHT: int = 400
 
+# -- winner score
+DEFAULT_WINNER_SCORE: int = 5
+
 # -- game screen config
 CELL_X: int = 150
 CELL_Y: int = 120

@@ -36,11 +36,37 @@ def start_main_menu():
         command=lambda: functions.change_theme("light"),
     ).grid(column=2, row=0, padx=10)
 
+    # -- winner score section
+    winner_score_frame = customtkinter.CTkFrame(
+        main_menu_window, width=config.MAIN_MENU_SCREEN_WIDTH, fg_color="transparent"
+    )
+    winner_score_frame.pack()
+    customtkinter.CTkLabel(
+        winner_score_frame,
+        text=f"Winner score (default : {config.DEFAULT_WINNER_SCORE}) : ",
+        font=config.normal_font,
+    ).grid(column=0, row=1)
+    winner_score = customtkinter.IntVar(value=config.DEFAULT_WINNER_SCORE)
+    winner_score_slider = customtkinter.CTkSlider(
+        winner_score_frame,
+        from_=1,
+        to=20,
+        number_of_steps=19,
+        variable=winner_score,
+        command=lambda value: functions.show_winner_score(value, winner_score_label),
+        width=150,
+    )
+    winner_score_slider.grid(column=1, row=1, padx=20)
+    winner_score_label = customtkinter.CTkLabel(
+        winner_score_frame, text=config.DEFAULT_WINNER_SCORE, font=config.bold_font
+    )
+    winner_score_label.grid(column=2, row=1)
+
     # -- start game section
     buttons_frame = customtkinter.CTkFrame(
         main_menu_window, width=config.MAIN_MENU_SCREEN_WIDTH, fg_color="transparent"
     )
-    buttons_frame.pack()
+    buttons_frame.pack(pady=config.PADDING_Y)
 
     customtkinter.CTkButton(
         buttons_frame,

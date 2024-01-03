@@ -27,17 +27,18 @@ def map_reader(name: str) -> tuple:
         ImportError: when map invalid
 
     Returns:
-        tuple -- walls information and tanks respawn location
+        tuple -- walls information and tanks spawn location and tanks respawn location
     """
     with open(f"maps/{name}.json", "r") as map_file:
         try:
             map_dict = json.loads(map_file.read())
             walls = map_dict["walls"]
             tanks = map_dict["tanks"]
+            respawn = map_dict["respawn"]
         except:
             raise ImportError("map data not valid")
 
-    return walls, tanks
+    return (walls, tanks, respawn)
 
 
 def draw_wall(
@@ -93,3 +94,20 @@ def show_winner_score(
     """
     winner_score = int(winner_score)
     winner_score_label.configure(text=winner_score)
+
+
+def convert_location_to_pixel(x: int, y: int) -> tuple:
+    """convert_location_to_pixel get x and y in cell and convert to pixel for show to user
+
+    Arguments:
+        x {int} -- cell x
+        y {int} -- cell y
+
+    Returns:
+        tuple -- x pixel and y pixel
+    """
+    x = (x * config.CELL_X) - config.CELL_X
+    x += config.CELL_X // 3
+    y = (y * config.CELL_Y) - config.CELL_Y
+    y += config.CELL_Y // 3
+    return x, y

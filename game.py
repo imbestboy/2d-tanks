@@ -103,8 +103,12 @@ def start_game(
                     )
                     if hit_tank := bullet.check_hit_tank(screen, tanks, dark_mode):
                         tank.bullets.remove(bullet)
-                        is_game_over = True
-                        winner_name = "A" if hit_tank.name == "B" else "B"
+                        tanks_copy = tanks[:]
+                        tanks_copy.remove(hit_tank)
+                        tanks_copy[0].score += 1
+                        if tanks_copy[0].score >= winner_score:
+                            winner_name = "A" if hit_tank.name == "B" else "B"
+                            is_game_over = True
 
             tank_rect = tank.draw(screen, dark_mode)
             if tank_rect.collidelistall(walls_rect):

@@ -82,7 +82,7 @@ def start_main_menu():
     customtkinter.CTkButton(
         buttons_frame,
         text="Help",
-        command=lambda: 1,
+        command=lambda: functions.help(main_menu_window=main_menu_window),
         width=200,
         height=55,
         font=config.normal_font,

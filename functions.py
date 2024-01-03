@@ -111,3 +111,50 @@ def convert_location_to_pixel(x: int, y: int) -> tuple:
     y = (y * config.CELL_Y) - config.CELL_Y
     y += config.CELL_Y // 3
     return x, y
+
+
+def help(main_menu_window: customtkinter.CTk):
+    help_window = customtkinter.CTkToplevel(main_menu_window)
+    help_window.geometry(f"{config.HELP_SCREEN_WIDTH}x{config.HELP_SCREEN_HEIGHT}")
+    help_window.title("Help")
+    help_window.resizable(False, False)
+    customtkinter.CTkLabel(help_window, text="").pack()
+    customtkinter.CTkLabel(
+        help_window, text="Tank A movement", font=config.bold_font
+    ).pack()
+    customtkinter.CTkLabel(
+        help_window, text="Move forward : ↑", font=config.normal_font
+    ).pack()
+    customtkinter.CTkLabel(
+        help_window, text="Move backward : ↓", font=config.normal_font
+    ).pack()
+    customtkinter.CTkLabel(
+        help_window, text="Rotate left : ←", font=config.normal_font
+    ).pack()
+    customtkinter.CTkLabel(
+        help_window, text="Rotate right : →", font=config.normal_font
+    ).pack()
+    customtkinter.CTkLabel(
+        help_window, text="Shoot : /", font=config.normal_font
+    ).pack()
+
+    customtkinter.CTkLabel(help_window, text="").pack()
+
+    customtkinter.CTkLabel(
+        help_window, text="Tank B movement", font=config.bold_font
+    ).pack()
+    customtkinter.CTkLabel(
+        help_window, text="Move forward : W", font=config.normal_font
+    ).pack()
+    customtkinter.CTkLabel(
+        help_window, text="Move backward : S", font=config.normal_font
+    ).pack()
+    customtkinter.CTkLabel(
+        help_window, text="Rotate left : A", font=config.normal_font
+    ).pack()
+    customtkinter.CTkLabel(
+        help_window, text="Rotate right : D", font=config.normal_font
+    ).pack()
+    customtkinter.CTkLabel(
+        help_window, text="Shoot : C", font=config.normal_font
+    ).pack()

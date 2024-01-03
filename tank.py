@@ -7,7 +7,14 @@ import functions
 
 
 class Tank:
-    def __init__(self, image_path: str, start_position: tuple, angle: int, name: str):
+    def __init__(
+        self,
+        image_path: str,
+        start_position: tuple,
+        angle: int,
+        name: str,
+        score_height: int,
+    ):
         self.img = pygame.image.load(image_path)
         self.speed = config.TANKS_SPEED
         self.vel = 0
@@ -16,6 +23,8 @@ class Tank:
         self.x, self.y = start_position
         self.name = name
         self.bullets = []
+        self.score = 0
+        self.score_height = score_height
 
     def rotate(self, left=False, right=False):
         if left:

@@ -8,7 +8,9 @@ import functions
 from tank import Tank
 
 
-def start_game(main_menu_window: customtkinter.CTk) -> None:
+def start_game(
+    main_menu_window: customtkinter.CTk, winner_score: customtkinter.IntVar
+) -> None:
     """start_game close main menu and start the game
 
     Arguments:
@@ -17,6 +19,7 @@ def start_game(main_menu_window: customtkinter.CTk) -> None:
     # -- loading settings
     dark_mode = True if main_menu_window["bg"] == "gray14" else False
     game_background_color = main_menu_window["bg"]
+    winner_score = winner_score.get()
 
     # -- close main menu window
     main_menu_window.destroy()
@@ -28,6 +31,7 @@ def start_game(main_menu_window: customtkinter.CTk) -> None:
     is_game_over = False
     winner_font = pygame.font.SysFont("Helvetica", 50)
     winner_name = None
+    score_font = pygame.font.SysFont("Helvetica", 30)
 
     # -- game components setup
     wall_color = "gray92" if dark_mode else "gray14"
@@ -43,8 +47,10 @@ def start_game(main_menu_window: customtkinter.CTk) -> None:
     tank_b["y"] = (tank_b["y"] * config.CELL_Y) - config.CELL_Y
     tank_b["y"] += config.CELL_Y // 3
     tank_image_path = "tank_images/dark.png" if dark_mode else "tank_images/light.png"
-    tank_a = Tank(tank_image_path, (tank_a["x"], tank_a["y"]), 0, "A")
-    tank_b = Tank(tank_image_path, (tank_b["x"], tank_b["y"]), 270, "B")
+    tank_a = Tank(
+        tank_image_path, (tank_a["x"], tank_a["y"]), 0, "A", config.CELL_Y // 3
+    )
+    tank_b = Tank(tank_image_path, (tank_b["x"], tank_b["y"]), 270, "B", config.CELL_Y)
     tanks = [tank_a, tank_b]
 
     # -- game window size
@@ -76,6 +82,17 @@ def start_game(main_menu_window: customtkinter.CTk) -> None:
             for wall in walls
         ]
         for tank in tanks:
+            tank_score = score_font.render(
+                f"{tank.name} : {tank.score}", True, wall_color
+            )
+            screen.blit(
+                tank_score,
+                (
+                    config.CELL_X * 8
+                    + (config.CELL_X // 2 - tank_score.get_width() // 2),
+                    tank.score_height,
+                ),
+            )
             for bullet in tank.bullets:
                 if bullet.check_die():
                     tank.bullet_die()

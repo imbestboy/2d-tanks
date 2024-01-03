@@ -71,7 +71,9 @@ def start_main_menu():
     customtkinter.CTkButton(
         buttons_frame,
         text="Start Game",
-        command=lambda: game.start_game(main_menu_window=main_menu_window),
+        command=lambda: game.start_game(
+            main_menu_window=main_menu_window, winner_score=winner_score
+        ),
         width=200,
         height=55,
         font=config.bold_font,

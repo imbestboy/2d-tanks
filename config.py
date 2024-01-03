@@ -10,7 +10,7 @@ DEFAULT_WINNER_SCORE: int = 5
 # -- game screen config
 CELL_X: int = 150
 CELL_Y: int = 120
-GAME_SCREEN_WIDTH: int = CELL_X * 8
+GAME_SCREEN_WIDTH: int = CELL_X * (8 + 1)  # plus 1 for score section
 GAME_SCREEN_HEIGHT: int = CELL_Y * 8
 
 # -- map configs

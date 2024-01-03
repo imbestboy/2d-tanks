@@ -32,6 +32,7 @@ def start_game(
     winner_font = pygame.font.SysFont("Helvetica", 50)
     winner_name = None
     score_font = pygame.font.SysFont("Helvetica", 30)
+    pygame.display.set_caption("2D tanks")
 
     # -- game components setup
     wall_color = "gray92" if dark_mode else "gray14"

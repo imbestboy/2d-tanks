@@ -3,6 +3,7 @@ import customtkinter
 import config
 import functions
 import game
+import map_builder
 
 
 def start_main_menu(
@@ -142,7 +143,7 @@ def start_main_menu(
     customtkinter.CTkButton(
         buttons_frame,
         text="Map Builder",
-        command=lambda: 1,
+        command=lambda: map_builder.map_builder(main_menu_window=main_menu_window),
         width=200,
         height=55,
         font=config.normal_font,

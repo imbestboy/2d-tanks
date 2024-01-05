@@ -53,7 +53,9 @@ def start_main_menu():
         to=20,
         number_of_steps=19,
         variable=winner_score,
-        command=lambda value: functions.show_winner_score(value, winner_score_label),
+        command=lambda value: functions.show_slider_value_to_label(
+            value, winner_score_label
+        ),
         width=150,
     )
     winner_score_slider.grid(column=1, row=1, padx=20)
@@ -62,11 +64,39 @@ def start_main_menu():
     )
     winner_score_label.grid(column=2, row=1)
 
+    # -- bullet speed section
+    bullet_speed_frame = customtkinter.CTkFrame(
+        main_menu_window, width=config.MAIN_MENU_SCREEN_WIDTH, fg_color="transparent"
+    )
+    bullet_speed_frame.pack(pady=config.PADDING_Y)
+    customtkinter.CTkLabel(
+        bullet_speed_frame,
+        text=f"Bullet speed (default : {config.DEFAULT_BULLET_SPEED}) : ",
+        font=config.normal_font,
+    ).grid(column=0, row=1)
+    bullet_speed = customtkinter.IntVar(value=config.DEFAULT_BULLET_SPEED)
+    bullet_speed_slider = customtkinter.CTkSlider(
+        bullet_speed_frame,
+        from_=6,
+        to=12,
+        number_of_steps=6,
+        variable=bullet_speed,
+        command=lambda value: functions.show_slider_value_to_label(
+            value, bullet_speed_label
+        ),
+        width=150,
+    )
+    bullet_speed_slider.grid(column=1, row=1, padx=20)
+    bullet_speed_label = customtkinter.CTkLabel(
+        bullet_speed_frame, text=config.DEFAULT_BULLET_SPEED, font=config.bold_font
+    )
+    bullet_speed_label.grid(column=2, row=1)
+
     # -- start game section
     buttons_frame = customtkinter.CTkFrame(
         main_menu_window, width=config.MAIN_MENU_SCREEN_WIDTH, fg_color="transparent"
     )
-    buttons_frame.pack(pady=config.PADDING_Y)
+    buttons_frame.pack()
 
     customtkinter.CTkButton(
         buttons_frame,

@@ -83,17 +83,14 @@ def blit_rotate_center(
     return new_rect
 
 
-def show_winner_score(
-    winner_score: float, winner_score_label: customtkinter.CTkLabel
-) -> None:
+def show_slider_value_to_label(value: float, label: customtkinter.CTkLabel) -> None:
     """show_winner_score show winner score label next to winner score slider for end user with every slider move
 
     Arguments:
-        speed_value {float} -- spaceship speed
-        spaceship_speed_label {customtkinter.CTkLabel} -- label to show spaceship speed
+        value {float} -- slider value
+        label {customtkinter.CTkLabel} -- label to show slider value
     """
-    winner_score = int(winner_score)
-    winner_score_label.configure(text=winner_score)
+    label.configure(text=int(value))
 
 
 def convert_location_to_pixel(x: int, y: int) -> tuple:

@@ -15,6 +15,7 @@ def start_game(
 
     Arguments:
         main_menu_window {customtkinter.CTk} -- tkinter main menu window
+        winner_score {customtkinter.IntVar} -- tkinter integer variable
     """
     # -- loading settings
     dark_mode = True if main_menu_window["bg"] == "gray14" else False

@@ -114,6 +114,11 @@ def convert_location_to_pixel(x: int, y: int) -> tuple:
 
 
 def help(main_menu_window: customtkinter.CTk):
+    """help open and design help window
+
+    Arguments:
+        main_menu_window {customtkinter.CTk} -- tkinter main menu window
+    """
     help_window = customtkinter.CTkToplevel(main_menu_window)
     help_window.geometry(f"{config.HELP_SCREEN_WIDTH}x{config.HELP_SCREEN_HEIGHT}")
     help_window.title("Help")

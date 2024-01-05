@@ -117,8 +117,8 @@ def start_game(
                     )
                     if hit_tank := bullet.check_hit_tank(screen, tanks, dark_mode):
                         tank.bullets.remove(bullet)
-                        random_respawn_location = random.randint(0, 8), random.randint(
-                            0, 8
+                        random_respawn_location = random.randint(1, 8), random.randint(
+                            1, 8
                         )
                         random_respawn_location = functions.convert_location_to_pixel(
                             *random_respawn_location

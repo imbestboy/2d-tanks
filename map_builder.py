@@ -8,6 +8,7 @@ import os
 import config
 import main_menu
 import functions
+from tank import Tank
 
 
 def map_builder(main_menu_window: customtkinter.CTk):
@@ -131,6 +132,7 @@ def map_builder(main_menu_window: customtkinter.CTk):
                 main_menu.start_main_menu()
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 for wall in walls_rect:
+                    wall: pygame.Rect
                     if wall.collidepoint(*mouse_position):
                         wall_type = (
                             "h" if wall.topright[0] - wall.topleft[0] != 10 else "v"
@@ -182,6 +184,42 @@ def map_builder(main_menu_window: customtkinter.CTk):
                 elif quit_button.collidepoint(*mouse_position):
                     is_running = False
                     main_menu.start_main_menu()
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:
+                tank_x, tank_y = pygame.mouse.get_pos()
+                tank_x = (tank_x // config.CELL_X) + 1
+                tank_y = (tank_y // config.CELL_Y) + 1
+                tank_image_path = (
+                    "tank_images/dark.png" if dark_mode else "tank_images/light.png"
+                )
+                tank_name = tanks_name.pop(0)
+                tanks_name.append(tank_name)
+                tank = Tank(
+                    tank_image_path,
+                    (functions.convert_location_to_pixel(tank_x, tank_y)),
+                    0 if tank_name == "A" else 270,
+                    tank_name,
+                    0,
+                )
+                exist_tanks = map_information_dict.get("tanks", [])
+                if len(exist_tanks) == 2:
+                    if tank_name == "A":
+                        tanks[0] = tank
+                        exist_tanks[0] = {"x": tank_x, "y": tank_y}
+                    else:
+                        tanks[1] = tank
+                        exist_tanks[1] = {"x": tank_x, "y": tank_y}
+                    map_information_dict.update({"tanks": exist_tanks})
+                elif len(exist_tanks) == 1:
+                    tanks.append(tank)
+                    map_information_dict.update(
+                        {"tanks": exist_tanks + [{"x": tank_x, "y": tank_y}]}
+                    )
+                else:
+                    tanks.append(tank)
+                    map_information_dict.update({"tanks": [{"x": tank_x, "y": tank_y}]})
+        is_save_error_open = False
+        for tank in tanks:
+            tank.draw(screen, dark_mode)
 
         # -- draw walls
         walls_rect = [

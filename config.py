@@ -30,6 +30,7 @@ temp_window = customtkinter.CTk()
 # -- font config
 normal_font = customtkinter.CTkFont("Helvetica", 20)
 bold_font = customtkinter.CTkFont("Helvetica", 20, "bold")
+small_bold_font = customtkinter.CTkFont("Helvetica", 16, "bold")
 
 temp_window.destroy()
 

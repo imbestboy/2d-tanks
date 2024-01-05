@@ -92,11 +92,32 @@ def start_main_menu():
     )
     bullet_speed_label.grid(column=2, row=1)
 
+    # -- change map category
+    change_map_frame = customtkinter.CTkFrame(
+        main_menu_window, config.MAIN_MENU_SCREEN_WIDTH, fg_color="transparent"
+    )
+    customtkinter.CTkLabel(
+        change_map_frame,
+        text="Maps : ",
+        font=config.normal_font,
+    ).grid(column=0, row=0, padx=10)
+
+    map_names = functions.get_maps_name()
+    map_name = customtkinter.StringVar(value=map_names[0])
+    optionmenu = customtkinter.CTkOptionMenu(
+        change_map_frame,
+        values=map_names,
+        variable=map_name,
+        font=config.small_bold_font,
+    ).grid(column=1, row=0, padx=10)
+
+    change_map_frame.pack()
+
     # -- start game section
     buttons_frame = customtkinter.CTkFrame(
         main_menu_window, width=config.MAIN_MENU_SCREEN_WIDTH, fg_color="transparent"
     )
-    buttons_frame.pack()
+    buttons_frame.pack(pady=config.PADDING_Y)
 
     customtkinter.CTkButton(
         buttons_frame,

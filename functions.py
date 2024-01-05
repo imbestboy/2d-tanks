@@ -1,6 +1,7 @@
 import customtkinter
 import json
 import pygame
+import os
 
 import config
 
@@ -160,3 +161,17 @@ def help(main_menu_window: customtkinter.CTk):
     customtkinter.CTkLabel(
         help_window, text="Shoot : C", font=config.normal_font
     ).pack()
+
+
+def get_maps_name() -> list:
+    """get_maps_name read json files in maps directory and get all map names
+
+    Returns:
+        list -- all maps name
+    """
+    maps_name = [
+        game_map.replace(".json", "")
+        for game_map in os.listdir("maps")
+        if ".json" in game_map
+    ]
+    return maps_name

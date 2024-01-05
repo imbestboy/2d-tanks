@@ -12,6 +12,7 @@ def start_game(
     main_menu_window: customtkinter.CTk,
     winner_score: customtkinter.IntVar,
     bullet_speed: customtkinter.IntVar,
+    map_name: customtkinter.StringVar,
 ) -> None:
     """start_game close main menu and start the game
 
@@ -19,12 +20,14 @@ def start_game(
         main_menu_window {customtkinter.CTk} -- tkinter main menu window
         winner_score {customtkinter.IntVar} -- tkinter integer variable
         bullet_speed {customtkinter.IntVar} -- tkinter integer variable
+        map_name {customtkinter.StringVar} -- tkinter string variable
     """
     # -- loading settings
     dark_mode = True if main_menu_window["bg"] == "gray14" else False
     game_background_color = main_menu_window["bg"]
     winner_score = winner_score.get()
     bullet_speed = bullet_speed.get()
+    map_name = map_name.get()
 
     # -- close main menu window
     main_menu_window.destroy()
@@ -42,7 +45,6 @@ def start_game(
 
     # -- game components setup
     wall_color = "gray92" if dark_mode else "gray14"
-    map_name = "map_1"
     walls, tanks, respawn_locations = functions.map_reader(map_name)
     for location in tanks + respawn_locations:
         location["x"], location["y"] = functions.convert_location_to_pixel(**location)

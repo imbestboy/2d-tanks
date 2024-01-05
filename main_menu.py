@@ -137,7 +137,16 @@ def start_main_menu(
         width=200,
         height=55,
         font=config.bold_font,
-    ).grid(column=2, row=0, padx=55)
+    ).grid(column=3, row=0, padx=20)
+
+    customtkinter.CTkButton(
+        buttons_frame,
+        text="Map Builder",
+        command=lambda: 1,
+        width=200,
+        height=55,
+        font=config.normal_font,
+    ).grid(column=2, row=0, padx=20)
 
     customtkinter.CTkButton(
         buttons_frame,
@@ -146,7 +155,7 @@ def start_main_menu(
         width=200,
         height=55,
         font=config.normal_font,
-    ).grid(column=1, row=0, padx=55)
+    ).grid(column=1, row=0, padx=20)
 
     customtkinter.CTkButton(
         buttons_frame,
@@ -155,6 +164,6 @@ def start_main_menu(
         width=200,
         height=55,
         font=config.normal_font,
-    ).grid(column=0, row=0, padx=55)
+    ).grid(column=0, row=0, padx=20)
 
     return main_menu_window

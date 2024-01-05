@@ -28,18 +28,17 @@ def map_reader(name: str) -> tuple:
         ImportError: when map invalid
 
     Returns:
-        tuple -- walls information and tanks spawn location and tanks respawn location
+        tuple -- walls information and tanks spawn location
     """
     with open(f"maps/{name}.json", "r") as map_file:
         try:
             map_dict = json.loads(map_file.read())
             walls = map_dict["walls"]
             tanks = map_dict["tanks"]
-            respawn = map_dict["respawn"]
         except:
             raise ImportError("map data not valid")
 
-    return (walls, tanks, respawn)
+    return (walls, tanks)
 
 
 def draw_wall(

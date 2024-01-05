@@ -45,8 +45,8 @@ def start_game(
 
     # -- game components setup
     wall_color = "gray92" if dark_mode else "gray14"
-    walls, tanks, respawn_locations = functions.map_reader(map_name)
-    for location in tanks + respawn_locations:
+    walls, tanks = functions.map_reader(map_name)
+    for location in tanks:
         location["x"], location["y"] = functions.convert_location_to_pixel(**location)
     tank_a, tank_b = tanks
     tank_image_path = "tank_images/dark.png" if dark_mode else "tank_images/light.png"
@@ -117,10 +117,15 @@ def start_game(
                     )
                     if hit_tank := bullet.check_hit_tank(screen, tanks, dark_mode):
                         tank.bullets.remove(bullet)
-                        random_respawn = random.choice(respawn_locations)
+                        random_respawn_location = random.randint(0, 8), random.randint(
+                            0, 8
+                        )
+                        random_respawn_location = functions.convert_location_to_pixel(
+                            *random_respawn_location
+                        )
                         hit_tank.x, hit_tank.y = (
-                            random_respawn["x"],
-                            random_respawn["y"],
+                            random_respawn_location[0],
+                            random_respawn_location[1],
                         )
                         tanks_copy = tanks[:]
                         tanks_copy.remove(hit_tank)

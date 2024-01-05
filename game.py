@@ -70,6 +70,9 @@ def start_game(
             if event.type == pygame.KEYDOWN:
                 if event.key in (pygame.K_p, pygame.K_ESCAPE):
                     is_pause = not is_pause
+                if event.key == pygame.K_e and is_pause:
+                    is_running = False
+                    main_menu.start_main_menu()
 
         screen.fill(game_background_color)
 
@@ -121,16 +124,26 @@ def start_game(
         if is_pause:
             screen.fill(game_background_color)
             pause_text = winner_font.render("GAME PAUSED", True, wall_color)
+            pause_detail_text = score_font.render(
+                "Press E to exit game", True, wall_color
+            )
             pause_x = (config.GAME_SCREEN_WIDTH // 2) - (pause_text.get_width() // 2)
             pause_y = (config.GAME_SCREEN_HEIGHT // 2) - (pause_text.get_height() // 2)
+            screen.blit(
+                pause_detail_text,
+                (
+                    pause_x + (pause_text.get_width() // 7),
+                    (pause_y + (pause_text.get_height() * 1.7)),
+                ),
+            )
             screen.blit(pause_text, (pause_x, pause_y))
-            winner_rect = pygame.Rect(
+            pause_rect = pygame.Rect(
                 pause_x - 20,
                 pause_y - 20,
                 pause_text.get_width() + 40,
                 pause_text.get_height() + 40,
             )
-            pygame.draw.rect(screen, wall_color, winner_rect, 3)
+            pygame.draw.rect(screen, wall_color, pause_rect, 3)
         else:
             if keys[pygame.K_LEFT]:
                 tank_a.rotate(left=True)

@@ -68,7 +68,8 @@ def start_game(
             if event.type == pygame.QUIT:
                 is_running = False
                 # -- run main menu window again
-                main_menu.start_main_menu()
+                theme = "dark" if dark_mode else "light"
+                main_menu.start_main_menu(theme, winner_score, bullet_speed, map_name)
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_SLASH:
                     tank_a.shoot(screen, dark_mode, bullet_speed)
@@ -79,7 +80,10 @@ def start_game(
                     is_pause = not is_pause
                 if event.key == pygame.K_e and is_pause:
                     is_running = False
-                    main_menu.start_main_menu()
+                    theme = "dark" if dark_mode else "light"
+                    main_menu.start_main_menu(
+                        theme, winner_score, bullet_speed, map_name
+                    )
 
         screen.fill(game_background_color)
 
@@ -192,7 +196,8 @@ def start_game(
             pygame.display.update()
             pygame.time.delay(3000)
             is_running = False
-            main_menu.start_main_menu()
+            theme = "dark" if dark_mode else "light"
+            main_menu.start_main_menu(theme, winner_score, bullet_speed, map_name)
 
         # -- update() the display to put your work on screen
         pygame.display.update()

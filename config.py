@@ -19,10 +19,11 @@ GAME_SCREEN_HEIGHT: int = CELL_Y * 8
 
 # -- map configs
 WALL_THICKNESS: int = 10
+DEFAULT_MAP: str = "map_1"
 
 # -- theme config
 customtkinter.set_default_color_theme("green")
-customtkinter.set_appearance_mode("system")
+DEFAULT_THEME: str = "system"
 
 # -- creating temp window for config fonts this window will destroy
 temp_window = customtkinter.CTk()

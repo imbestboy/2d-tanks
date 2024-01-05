@@ -5,7 +5,12 @@ import functions
 import game
 
 
-def start_main_menu():
+def start_main_menu(
+    theme: str = config.DEFAULT_THEME,
+    winner_score: int = config.DEFAULT_WINNER_SCORE,
+    bullet_speed: int = config.DEFAULT_BULLET_SPEED,
+    map_name: str = config.DEFAULT_MAP,
+):
     # -- create main menu window
     main_menu_window = customtkinter.CTk()
 
@@ -15,6 +20,7 @@ def start_main_menu():
     )
     main_menu_window.title("Main Menu")
     main_menu_window.resizable(False, False)
+    customtkinter.set_appearance_mode(theme)
 
     # -- change theme section
     change_theme_frame = customtkinter.CTkFrame(
@@ -46,7 +52,7 @@ def start_main_menu():
         text=f"Winner score (default : {config.DEFAULT_WINNER_SCORE}) : ",
         font=config.normal_font,
     ).grid(column=0, row=1)
-    winner_score = customtkinter.IntVar(value=config.DEFAULT_WINNER_SCORE)
+    winner_score = customtkinter.IntVar(value=winner_score)
     winner_score_slider = customtkinter.CTkSlider(
         winner_score_frame,
         from_=1,
@@ -60,7 +66,7 @@ def start_main_menu():
     )
     winner_score_slider.grid(column=1, row=1, padx=20)
     winner_score_label = customtkinter.CTkLabel(
-        winner_score_frame, text=config.DEFAULT_WINNER_SCORE, font=config.bold_font
+        winner_score_frame, text=winner_score.get(), font=config.bold_font
     )
     winner_score_label.grid(column=2, row=1)
 
@@ -74,7 +80,7 @@ def start_main_menu():
         text=f"Bullet speed (default : {config.DEFAULT_BULLET_SPEED}) : ",
         font=config.normal_font,
     ).grid(column=0, row=1)
-    bullet_speed = customtkinter.IntVar(value=config.DEFAULT_BULLET_SPEED)
+    bullet_speed = customtkinter.IntVar(value=bullet_speed)
     bullet_speed_slider = customtkinter.CTkSlider(
         bullet_speed_frame,
         from_=6,
@@ -88,7 +94,7 @@ def start_main_menu():
     )
     bullet_speed_slider.grid(column=1, row=1, padx=20)
     bullet_speed_label = customtkinter.CTkLabel(
-        bullet_speed_frame, text=config.DEFAULT_BULLET_SPEED, font=config.bold_font
+        bullet_speed_frame, text=bullet_speed.get(), font=config.bold_font
     )
     bullet_speed_label.grid(column=2, row=1)
 
@@ -103,7 +109,7 @@ def start_main_menu():
     ).grid(column=0, row=0, padx=10)
 
     map_names = functions.get_maps_name()
-    map_name = customtkinter.StringVar(value=map_names[0])
+    map_name = customtkinter.StringVar(value=map_name)
     optionmenu = customtkinter.CTkOptionMenu(
         change_map_frame,
         values=map_names,

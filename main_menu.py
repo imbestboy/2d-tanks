@@ -83,9 +83,9 @@ def start_main_menu(
     bullet_speed = customtkinter.IntVar(value=bullet_speed)
     bullet_speed_slider = customtkinter.CTkSlider(
         bullet_speed_frame,
-        from_=6,
-        to=12,
-        number_of_steps=6,
+        from_=5,
+        to=8,
+        number_of_steps=3,
         variable=bullet_speed,
         command=lambda value: functions.show_slider_value_to_label(
             value, bullet_speed_label

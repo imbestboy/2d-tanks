@@ -61,12 +61,26 @@ def map_builder(main_menu_window: customtkinter.CTk):
     # -- map builder loop
     while is_running:
         screen.fill(map_builder_background_color)
+        mouse_position = pygame.mouse.get_pos()
 
         for event in pygame.event.get():
             # -- pygame.QUIT event means the user clicked X to close your window
             if event.type == pygame.QUIT:
                 is_running = False
                 main_menu.start_main_menu()
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                for wall in walls_rect:
+                    if wall.collidepoint(*mouse_position):
+                        wall_type = (
+                            "h" if wall.topright[0] - wall.topleft[0] != 10 else "v"
+                        )
+                        wall_x, wall_y = wall.topleft
+                        x = wall_x // config.CELL_X
+                        y = wall_y // config.CELL_Y
+                        try:
+                            walls.remove({"type": wall_type, "x": x, "y": y, "d": 1})
+                        except ValueError:
+                            pass
 
         # -- draw walls
         walls_rect = [

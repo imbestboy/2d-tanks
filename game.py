@@ -29,6 +29,7 @@ def start_game(
     clock = pygame.time.Clock()
     is_running = True
     is_game_over = False
+    is_pause = False
     winner_font = pygame.font.SysFont("Helvetica", 50)
     winner_name = None
     score_font = pygame.font.SysFont("Helvetica", 30)
@@ -66,6 +67,9 @@ def start_game(
                     tank_a.shoot(screen, dark_mode)
                 if event.key == pygame.K_c:
                     tank_b.shoot(screen, dark_mode)
+            if event.type == pygame.KEYDOWN:
+                if event.key in (pygame.K_p, pygame.K_ESCAPE):
+                    is_pause = not is_pause
 
         screen.fill(game_background_color)
 
@@ -92,7 +96,8 @@ def start_game(
                 if bullet.check_die():
                     tank.bullet_die()
                 else:
-                    bullet.move_forward()
+                    if not is_pause:
+                        bullet.move_forward()
                     bullet.draw_and_check_hit_wall(
                         screen, walls_rect, game_background_color
                     )
@@ -113,24 +118,37 @@ def start_game(
             tank_rect = tank.draw(screen, dark_mode)
             if tank_rect.collidelistall(walls_rect):
                 tank.hit_wall()
+        if is_pause:
+            screen.fill(game_background_color)
+            pause_text = winner_font.render("GAME PAUSED", True, wall_color)
+            pause_x = (config.GAME_SCREEN_WIDTH // 2) - (pause_text.get_width() // 2)
+            pause_y = (config.GAME_SCREEN_HEIGHT // 2) - (pause_text.get_height() // 2)
+            screen.blit(pause_text, (pause_x, pause_y))
+            winner_rect = pygame.Rect(
+                pause_x - 20,
+                pause_y - 20,
+                pause_text.get_width() + 40,
+                pause_text.get_height() + 40,
+            )
+            pygame.draw.rect(screen, wall_color, winner_rect, 3)
+        else:
+            if keys[pygame.K_LEFT]:
+                tank_a.rotate(left=True)
+            if keys[pygame.K_RIGHT]:
+                tank_a.rotate(right=True)
+            if keys[pygame.K_UP]:
+                tank_a.move_forward()
+            if keys[pygame.K_DOWN]:
+                tank_a.move_backward()
 
-        if keys[pygame.K_LEFT]:
-            tank_a.rotate(left=True)
-        if keys[pygame.K_RIGHT]:
-            tank_a.rotate(right=True)
-        if keys[pygame.K_UP]:
-            tank_a.move_forward()
-        if keys[pygame.K_DOWN]:
-            tank_a.move_backward()
-
-        if keys[pygame.K_w]:
-            tank_b.move_forward()
-        if keys[pygame.K_s]:
-            tank_b.move_backward()
-        if keys[pygame.K_a]:
-            tank_b.rotate(left=True)
-        if keys[pygame.K_d]:
-            tank_b.rotate(right=True)
+            if keys[pygame.K_w]:
+                tank_b.move_forward()
+            if keys[pygame.K_s]:
+                tank_b.move_backward()
+            if keys[pygame.K_a]:
+                tank_b.rotate(left=True)
+            if keys[pygame.K_d]:
+                tank_b.rotate(right=True)
 
         if is_game_over:
             screen.fill(game_background_color)

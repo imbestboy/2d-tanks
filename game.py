@@ -9,18 +9,22 @@ from tank import Tank
 
 
 def start_game(
-    main_menu_window: customtkinter.CTk, winner_score: customtkinter.IntVar
+    main_menu_window: customtkinter.CTk,
+    winner_score: customtkinter.IntVar,
+    bullet_speed: customtkinter.IntVar,
 ) -> None:
     """start_game close main menu and start the game
 
     Arguments:
         main_menu_window {customtkinter.CTk} -- tkinter main menu window
         winner_score {customtkinter.IntVar} -- tkinter integer variable
+        bullet_speed {customtkinter.IntVar} -- tkinter integer variable
     """
     # -- loading settings
     dark_mode = True if main_menu_window["bg"] == "gray14" else False
     game_background_color = main_menu_window["bg"]
     winner_score = winner_score.get()
+    bullet_speed = bullet_speed.get()
 
     # -- close main menu window
     main_menu_window.destroy()
@@ -65,9 +69,9 @@ def start_game(
                 main_menu.start_main_menu()
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_SLASH:
-                    tank_a.shoot(screen, dark_mode)
+                    tank_a.shoot(screen, dark_mode, bullet_speed)
                 if event.key == pygame.K_c:
-                    tank_b.shoot(screen, dark_mode)
+                    tank_b.shoot(screen, dark_mode, bullet_speed)
             if event.type == pygame.KEYDOWN:
                 if event.key in (pygame.K_p, pygame.K_ESCAPE):
                     is_pause = not is_pause

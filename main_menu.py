@@ -102,7 +102,9 @@ def start_main_menu():
         buttons_frame,
         text="Start Game",
         command=lambda: game.start_game(
-            main_menu_window=main_menu_window, winner_score=winner_score
+            main_menu_window=main_menu_window,
+            winner_score=winner_score,
+            bullet_speed=bullet_speed,
         ),
         width=200,
         height=55,

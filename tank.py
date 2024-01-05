@@ -70,14 +70,19 @@ class Tank:
         self.vel = -3 * self.vel
         self.move()
 
-    def shoot(self, screen: pygame.surface.Surface, is_dark_mode: bool):
+    def shoot(
+        self, screen: pygame.surface.Surface, is_dark_mode: bool, bullet_speed: int
+    ):
         if len(self.bullets) < config.TOTAL_BULLET_COUNT:
             bullet_image_path = (
                 "bullets_image/dark.png" if is_dark_mode else "bullets_image/light.png"
             )
             tank_rect = self.draw(screen, is_dark_mode)
             new_bullet = Bullet(
-                bullet_image_path, (tank_rect.centerx, tank_rect.centery), self.angle
+                bullet_image_path,
+                (tank_rect.centerx, tank_rect.centery),
+                self.angle,
+                bullet_speed,
             )
             self.bullets.append(new_bullet)
 
@@ -86,9 +91,11 @@ class Tank:
 
 
 class Bullet:
-    def __init__(self, image_path: str, shoot_position: tuple, angle: int):
+    def __init__(
+        self, image_path: str, shoot_position: tuple, angle: int, bullet_speed: int
+    ):
         self.img = pygame.image.load(image_path)
-        self.speed = config.BULLET_SPEED
+        self.speed = bullet_speed
         self.vel = self.speed
         self.is_inside = True
         self.angle = angle

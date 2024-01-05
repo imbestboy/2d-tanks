@@ -46,3 +46,6 @@ TANKS_ROTATION_SPEED: int = 4
 BULLET_ALIVE_TIME: int = 3  # in second
 TOTAL_BULLET_COUNT: int = 3
 DEFAULT_BULLET_SPEED: int = 6
+
+# -- map builder config
+BUTTON_HOVER_COLORS = {"restart": "yellow", "save": "green", "quit": "red"}

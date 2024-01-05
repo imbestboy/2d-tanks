@@ -7,10 +7,6 @@ MAIN_MENU_SCREEN_HEIGHT: int = 400
 # -- winner score
 DEFAULT_WINNER_SCORE: int = 5
 
-# -- help screen config
-HELP_SCREEN_WIDTH: int = 300
-HELP_SCREEN_HEIGHT: int = 400
-
 # -- game screen config
 CELL_X: int = 150
 CELL_Y: int = 120

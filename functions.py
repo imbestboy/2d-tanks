@@ -117,7 +117,7 @@ def help(main_menu_window: customtkinter.CTk):
         main_menu_window {customtkinter.CTk} -- tkinter main menu window
     """
     help_window = customtkinter.CTkToplevel(main_menu_window)
-    help_window.geometry(f"{config.HELP_SCREEN_WIDTH}x{config.HELP_SCREEN_HEIGHT}")
+    # help_window.geometry(f"{config.HELP_SCREEN_WIDTH}x{config.HELP_SCREEN_HEIGHT}")
     help_window.title("Help")
     help_window.resizable(False, False)
     customtkinter.CTkLabel(help_window, text="").pack()
@@ -160,6 +160,28 @@ def help(main_menu_window: customtkinter.CTk):
     customtkinter.CTkLabel(
         help_window, text="Shoot : C", font=config.normal_font
     ).pack()
+
+    customtkinter.CTkLabel(help_window, text="").pack()
+
+    customtkinter.CTkLabel(
+        help_window, text="Map Builder", font=config.bold_font
+    ).pack()
+    customtkinter.CTkLabel(
+        help_window, text="Click on wall to remove wall", font=config.normal_font
+    ).pack()
+    customtkinter.CTkLabel(
+        help_window,
+        text="Right click on cell to set tank spawn location",
+        font=config.normal_font,
+    ).pack(padx=20)
+
+    customtkinter.CTkLabel(
+        help_window,
+        text="NOTE: respawn will randomly on map",
+        font=config.normal_font,
+    ).pack()
+
+    customtkinter.CTkLabel(help_window, text="").pack()
 
 
 def get_maps_name() -> list:
